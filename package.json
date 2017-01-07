@@ -1,0 +1,14 @@
+{
+  "name": "gulp-screencast",
+  "version": "1.0.0",
+  "description": "Video tutorial how to use gulp package. ## 2 Install and run tasks You have to install global and local gulp (but also you can use a local version and add **npm script** parameter from `node_modules`).",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "gulp": "^3.9.1"
+  }
+}
