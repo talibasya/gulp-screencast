@@ -47,3 +47,13 @@ Add `gulp-newer` plugin for increase perform for watch command. Plugin `gulp-cha
 Description about `gulp-cached`, `gulp-cache`.
 
 ## 7 browser-sync autoreload
+
+Simpler `tiny-lr` and more complicated - `browser-sync`.
+Add livereload server and "listen" `dest` directory.
+
+## 8 error handle
+
+Using plugin `gulp-notify` we show a message about compile error (standart mac message).
+
+Plugin `gulp-plumber` rewrite own **pipe** method for error handling.
+Module `multipipe` - good way for handle error.

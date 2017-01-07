@@ -9,6 +9,8 @@ const gulpIf = require('gulp-if');
 const del = require('del');
 const newer = require('gulp-newer');
 const bs = require('browser-sync').create();
+const notify = require('gulp-notify');
+const plumber = require('gulp-plumber');
 
 const isDevelopment = !process.env.NODE_ENV || process.env.NODE_ENV == 'development';
 
@@ -74,9 +76,23 @@ gulp.task('clean', function() {
 gulp.task('styles2', function() {
 
   return gulp.src('source/styles/main.styl')
+    .pipe(plumber({
+      errorHandler: notify.onError(function(err) {
+        return {
+         title: 'Styles',
+         message: err.message
+        }
+      })
+    }))
     .pipe(gulpIf(isDevelopment, sourcemaps.init()))
     .pipe(debug({title: 'src'}))
     .pipe(stylus())
+    // .on('error', notify.onError(function(err) {
+      // return {
+        // title: 'Styles',
+        // message: err.message
+      // }
+    // }))
     .pipe(gulpIf(isDevelopment, sourcemaps.write('.')))
     .pipe(gulp.dest('dest'))
 });
