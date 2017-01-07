@@ -45,3 +45,5 @@ Add `gulp-newer` plugin for increase perform for watch command. Plugin `gulp-cha
 `gulp-autoprefixer` and `gulp-remember` combinations.
 
 Description about `gulp-cached`, `gulp-cache`.
+
+## 7 browser-sync autoreload

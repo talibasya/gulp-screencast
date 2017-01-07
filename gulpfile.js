@@ -8,6 +8,7 @@ const sourcemaps = require('gulp-sourcemaps');
 const gulpIf = require('gulp-if');
 const del = require('del');
 const newer = require('gulp-newer');
+const bs = require('browser-sync').create();
 
 const isDevelopment = !process.env.NODE_ENV || process.env.NODE_ENV == 'development';
 
@@ -70,7 +71,7 @@ gulp.task('clean', function() {
   return del('dest');
 });
 
-gulp.task('styles2', ['clean'], function() {
+gulp.task('styles2', function() {
 
   return gulp.src('source/styles/main.styl')
     .pipe(gulpIf(isDevelopment, sourcemaps.init()))
@@ -80,21 +81,32 @@ gulp.task('styles2', ['clean'], function() {
     .pipe(gulp.dest('dest'))
 });
 
-gulp.task('assets', ['clean'], function() {
-  return gulp.src('source/assets/**', {since: gulp.lastRun('assets')})
+gulp.task('assets', function() {
+  return gulp.src('source/assets/**')
     .pipe(newer('dest'))
     .pipe(gulp.dest('dest'))
 })
 
-gulp.task('html', ['clean'], function() {
+gulp.task('html', function() {
   return gulp.src('source/*.html')
-  .pipe(debug({title: 'html'}))
+    .pipe(debug({title: 'html'}))
     .pipe(gulp.dest('dest'))
 })
 
-gulp.task('dev', ['build'], function() {
+gulp.task('watch', ['build'], function() {
   gulp.watch('source/styles/**/*.*', ['styles2']);
   gulp.watch('source/assets/**/*.*', ['assets']);
+  gulp.watch('source/*.html', ['html']);
 })
 
 gulp.task('build', ['styles2', 'assets', 'html']);
+
+gulp.task('dev', ['watch', 'serve'])
+
+gulp.task('serve', ['build'], function() {
+  bs.init({
+    server: 'dest'
+  })
+
+  bs.watch('dest/**/*.*').on('change', bs.reload);
+})
