@@ -32,3 +32,8 @@ Install `gulp-debug`, `gulp-concat` packages and use it.
 
 Create `gulp styles2` task with sourcemap.
 Add NODE_ENV checking using `gulp-if` plugin.
+
+## 5 Increment deploying, watch
+
+Add command watch, which automatically run appropriate task if files were changed. Removing, when file was removed from source using `chokidar` (event `unlink`).
+Create gulp task `dev`.

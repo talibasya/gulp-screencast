@@ -80,7 +80,7 @@ gulp.task('styles2', ['clean'], function() {
 });
 
 gulp.task('assets', ['clean'], function() {
-  return gulp.src('source/assets/**')
+  return gulp.src('source/assets/**', {since: gulp.lastRun('assets')})
     .pipe(gulp.dest('dest'))
 })
 
@@ -88,6 +88,11 @@ gulp.task('html', ['clean'], function() {
   return gulp.src('source/*.html')
   .pipe(debug({title: 'html'}))
     .pipe(gulp.dest('dest'))
+})
+
+gulp.task('dev', ['build'], function() {
+  gulp.watch('source/styles/**/*.*', ['styles2']);
+  gulp.watch('source/assets/**/*.*', ['assets']);
 })
 
 gulp.task('build', ['styles2', 'assets', 'html']);
