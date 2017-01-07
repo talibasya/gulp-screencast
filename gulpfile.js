@@ -23,3 +23,25 @@ gulp.task('example:process', function() {
 });
 
 gulp.task('example', ['hello', 'example:promise', 'example:stream', 'example:process']);
+
+gulp.task('default', function() {
+  return gulp.src('source/**/*.*') // minimatch {source1,source2}/**/*.{js,css}
+    .on('data', function(file) {
+      console.log({
+        contents: file.contents,
+        path: file.path,
+        cwd: file.cwd,
+        base: file.base,
+        relative: file.relative,
+        // dirname: file.dirname,
+        // basename: file.basename,
+        // stem: file.stem,
+        // extname: file.extname,
+      });
+    })
+    .pipe(gulp.dest(function(file) {
+      // console.log(file.extname);
+      return file.extname == '.js' ? 'js' :
+        file.extname == '.css' ? 'css' : 'dest';
+    }));
+});
