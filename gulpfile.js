@@ -1,6 +1,15 @@
 'use strict'
 
 const gulp = require('gulp');
+const stylus = require('gulp-stylus');
+const concat = require('gulp-concat');
+const debug = require('gulp-debug');
+const sourcemaps = require('gulp-sourcemaps');
+const gulpIf = require('gulp-if');
+const del = require('del');
+
+const isDevelopment = !process.env.NODE_ENV || process.env.NODE_ENV == 'development';
+
 
 gulp.task('hello', function(cb) {
   console.log('Hello');
@@ -45,3 +54,40 @@ gulp.task('default', function() {
         file.extname == '.css' ? 'css' : 'dest';
     }));
 });
+
+gulp.task('styles', function() {
+  return gulp.src('source/styles/**/*.styl', {base: 'source'})
+    .pipe(debug({title: 'src'}))
+    .pipe(stylus())
+    .pipe(debug({title: 'stylus'}))
+    .pipe(concat('all.css'))
+    .pipe(debug({title: 'content'}))
+    .pipe(gulp.dest('dest'))
+})
+
+gulp.task('clean', function() {
+  return del('dest');
+});
+
+gulp.task('styles2', ['clean'], function() {
+
+  return gulp.src('source/styles/main.styl')
+    .pipe(gulpIf(isDevelopment, sourcemaps.init()))
+    .pipe(debug({title: 'src'}))
+    .pipe(stylus())
+    .pipe(gulpIf(isDevelopment, sourcemaps.write('.')))
+    .pipe(gulp.dest('dest'))
+});
+
+gulp.task('assets', ['clean'], function() {
+  return gulp.src('source/assets/**')
+    .pipe(gulp.dest('dest'))
+})
+
+gulp.task('html', ['clean'], function() {
+  return gulp.src('source/*.html')
+  .pipe(debug({title: 'html'}))
+    .pipe(gulp.dest('dest'))
+})
+
+gulp.task('build', ['styles2', 'assets', 'html']);

@@ -21,3 +21,14 @@ Was viewed `gulp.src`, `gulp.dest` methods.
 gulp.src(['movies/**/*.mp4'], {read: false})
   .pipe(...)
 ```
+## 4 Deploying styles
+
+Install `gulp-stylus` for compile **.styl** files. Create `gulp styles` task.
+You can set base directory:
+```javascript
+gulp.src('source/styles/**/*.styl', {base: 'source'})
+```
+Install `gulp-debug`, `gulp-concat` packages and use it.
+
+Create `gulp styles2` task with sourcemap.
+Add NODE_ENV checking using `gulp-if` plugin.
