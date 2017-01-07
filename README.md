@@ -57,3 +57,53 @@ Using plugin `gulp-notify` we show a message about compile error (standart mac m
 
 Plugin `gulp-plumber` rewrite own **pipe** method for error handling.
 Module `multipipe` - good way for handle error.
+
+## 9 create plugins using through2
+
+Was described how to add own handler in `pipe` method. (Own plugin).
+An example with file `manifest.js` (write path:data modified).
+
+## 10 gulp eslint, gulp-if, stream-combiner2
+
+Add `gulp-eslint` package for check code.
+
+Optimization `gulp-eslint` checking (creating cache and watch changing).
+
+```javascript
+gulp.task('lint', function() {
+  return gulp.src('source/**/*.js')
+  .pipe(eslint()) // adds own data into prop file.eslint
+  .pipe(eslint.format()) // show info
+  .pipe(eslint.failAfterError()) // exit code = 1
+})
+```
+
+## 11 threads Node.js
+
+How is working threads and answer the question about `pipe` etc.
+
+## 12 Organization gulpfile
+
+Divide `gulpfile.js` into separate files and loads tasks using **lazy loading**.
+
+```javascript
+function lazyRequireTask(taskName, path, options) {
+  options = options || {};
+  options.taskName = taskName;
+  gulp.task(taskName, function(callback) {
+    let task = require(path).call(this, options);
+    return task(callback);
+
+  })
+}
+
+lazyRequireTask('styles', './tasks/styles', {
+  src: 'source/styles/main.styl'
+})
+```
+
+Module `gulp-load-plugins` includes module, when you call it. (Instead requiring modules on top of the file).
+
+## 13 create working version
+
+## 14 integration with webpack
