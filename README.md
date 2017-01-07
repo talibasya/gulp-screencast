@@ -37,3 +37,11 @@ Add NODE_ENV checking using `gulp-if` plugin.
 
 Add command watch, which automatically run appropriate task if files were changed. Removing, when file was removed from source using `chokidar` (event `unlink`).
 Create gulp task `dev`.
+
+## 6 Incrementing, performance.
+
+Add `gulp-newer` plugin for increase perform for watch command. Plugin `gulp-changed` as alternative and `gulp-remember`.
+
+`gulp-autoprefixer` and `gulp-remember` combinations.
+
+Description about `gulp-cached`, `gulp-cache`.

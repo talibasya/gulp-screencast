@@ -7,6 +7,7 @@ const debug = require('gulp-debug');
 const sourcemaps = require('gulp-sourcemaps');
 const gulpIf = require('gulp-if');
 const del = require('del');
+const newer = require('gulp-newer');
 
 const isDevelopment = !process.env.NODE_ENV || process.env.NODE_ENV == 'development';
 
@@ -81,6 +82,7 @@ gulp.task('styles2', ['clean'], function() {
 
 gulp.task('assets', ['clean'], function() {
   return gulp.src('source/assets/**', {since: gulp.lastRun('assets')})
+    .pipe(newer('dest'))
     .pipe(gulp.dest('dest'))
 })
 
